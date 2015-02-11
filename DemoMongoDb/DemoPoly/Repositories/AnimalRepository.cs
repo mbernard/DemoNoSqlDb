@@ -1,4 +1,4 @@
-﻿using DemoMongoDb.Models;
+﻿using DemoPoly.Models;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 using System;
@@ -7,8 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MongoDB.Driver.Linq;
+using MongoDB.Bson.Serialization;
 
-namespace DemoMongoDb.Repositories
+namespace DemoPoly.Repositories
 {
     public class AnimalRepository
     {
@@ -21,6 +22,9 @@ namespace DemoMongoDb.Repositories
             this._client = new MongoClient("mongodb://localhost:27017");
             this._database = this._client.GetServer().GetDatabase("DemoPoly");
             this._collection = this._database.GetCollection<Animal>("Animals");
+
+            BsonClassMap.RegisterClassMap<Cat>();
+            BsonClassMap.RegisterClassMap<Bird>();
         }
 
         public IQueryable<Animal> Get()
